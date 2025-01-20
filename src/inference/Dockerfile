@@ -1,17 +1,22 @@
+# Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the requirements file into the container
-COPY ../../requirements.txt requirements.txt
+# Copy requirements file into the container
+COPY requirements.txt .
 
-# Install dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the source code and data into the container
-COPY ../../outputs/models/ outputs/models/
-COPY . .
+# Copy inference script and processed data into the container
+COPY inference.py .
+COPY data/processed /app/data/processed
+COPY outputs/models /app/outputs/models
 
-# Run the inference script
+# Ensure the output directory exists
+RUN mkdir -p /app/outputs/predictions
+
+# Run the inference script automatically when the container starts
 CMD ["python", "inference.py"]

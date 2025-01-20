@@ -1,0 +1,35 @@
+# Ignore data files
+/data/raw/
+/data/processed/
+
+# Ignore outputs
+/outputs/models/
+/outputs/predictions/
+/outputs/figures/
+
+# Ignore Python cache files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pkl
+*.joblib
+
+# Ignore virtual environments
+venv/
+.env/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Ignore Docker-related files
+*.pid

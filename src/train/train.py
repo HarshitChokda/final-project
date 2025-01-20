@@ -1,55 +1,54 @@
-import os
-import joblib
-import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, accuracy_score
+from scipy.sparse import load_npz
+import numpy as np
+import os
+import joblib
 
-def train_model(data_dir="data/processed/", output_dir="outputs/"):
-    """
-    Train a LogisticRegression model on the processed data and save the model and metrics.
+def train_model():
+    data_dir = "/app/data/processed/"
+    output_dir = "/app/outputs/models/"
 
-    Parameters:
-    - data_dir: str, path to the directory containing processed data.
-    - output_dir: str, path to the directory where model and metrics will be saved.
-    """
-    # Ensure output directories exist
-    model_dir = os.path.join(output_dir, "models")
-    metrics_dir = os.path.join(output_dir, "predictions")
-    os.makedirs(model_dir, exist_ok=True)
-    os.makedirs(metrics_dir, exist_ok=True)
+    # Ensure output directory exists
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
     # Load processed data
     print("Loading processed data...")
-    X_train = np.load(os.path.join(data_dir, "train_features.npz"))["arr_0"]
+    X_train = load_npz(os.path.join(data_dir, "train_features.npz"))
     y_train = np.load(os.path.join(data_dir, "train_labels.npy"))
-    X_test = np.load(os.path.join(data_dir, "test_features.npz"))["arr_0"]
+    X_test = load_npz(os.path.join(data_dir, "test_features.npz"))
     y_test = np.load(os.path.join(data_dir, "test_labels.npy"))
 
-    # Train LogisticRegression model
-    print("Training LogisticRegression model...")
-    clf = LogisticRegression(max_iter=1000, random_state=42)
-    clf.fit(X_train, y_train)
+    print("Data successfully loaded.")
 
-    # Save the trained model
-    model_path = os.path.join(model_dir, "logistic_regression_model.pkl")
-    joblib.dump(clf, model_path)
-    print(f"Model saved at {model_path}")
+    # Train the model
+    print("Training Logistic Regression model...")
+    model = LogisticRegression(max_iter=1000)
+    model.fit(X_train, y_train)
+    print("Model training completed.")
 
     # Evaluate the model
     print("Evaluating the model...")
-    y_pred = clf.predict(X_test)
+    y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
-    report = classification_report(y_test, y_pred, target_names=["Negative", "Positive"])
+    report = classification_report(y_test, y_pred, target_names=["negative", "positive"])
 
     # Save metrics
-    metrics_path = os.path.join(metrics_dir, "metrics.txt")
-    with open(metrics_path, "w") as f:
+    with open(os.path.join(output_dir, "metrics.txt"), "w") as f:
         f.write(f"Accuracy: {accuracy:.4f}\n")
-        f.write("\nClassification Report:\n")
+        f.write("Classification Report:\n")
         f.write(report)
-    print(f"Metrics saved at {metrics_path}")
 
-    print("\nTraining and evaluation complete!")
+    # Save the model
+    model_path = os.path.join(output_dir, "logistic_regression_model.pkl")
+    joblib.dump(model, model_path)
+    print(f"Model saved to {model_path}")
+
+    # Print results
+    print(f"Accuracy: {accuracy:.4f}")
+    print("Classification Report:")
+    print(report)
 
 if __name__ == "__main__":
     train_model()
