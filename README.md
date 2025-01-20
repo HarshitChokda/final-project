@@ -60,10 +60,10 @@ Sentiments are equally distributed, eliminating the need for data balancing tech
 
 | Model               | Precision (Negative) | Recall (Negative) | F1-Score (Negative) | Precision (Positive) | Recall (Positive) | F1-Score (Positive) | Accuracy |
 |---------------------|----------------------|-------------------|---------------------|----------------------|-------------------|---------------------|----------|
-| Logistic Regression  | 0.90                 | 0.89              | 0.89                | 0.89                 | 0.90              | 0.89                | 0.89     |
-| SVM                 | 0.90                 | 0.87              | 0.88                | 0.89                 | 0.90              | 0.90                | 0.90     |
-| Naive Bayes         | 0.86                 | 0.84              | 0.85                | 0.85                 | 0.85              | 0.87                | 0.87     |
-| Random Forest       | 0.84                 | 0.86              | 0.85                | 0.85                 | 0.83              | 0.84                | 0.84     |
+| Logistic Regression  | 0.90                 | 0.88              | 0.89                | 0.88                 | 0.90              | 0.89                | 0.89     |
+| SVM                 | 0.90                 | 0.87              | 0.88                | 0.88                 | 0.90              | 0.90                | 0.89     |
+| Naive Bayes         | 0.86                 | 0.84              | 0.85                | 0.85                 | 0.86              | 0.87                | 0.85     |
+| Random Forest       | 0.84                 | 0.86              | 0.85                | 0.86                 | 0.84              | 0.84                | 0.85      |
 
 ## Final Model Selection:
 
