@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy inference script and processed data into the container
-COPY inference.py .
+COPY src/inference/inference.py /app/inference.py
 COPY data/processed /app/data/processed
 COPY outputs/models /app/outputs/models
 
